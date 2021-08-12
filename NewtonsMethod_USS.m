@@ -1,15 +1,16 @@
-%Ben Walleshauser
-%7/19
+%bwaaaaaaaa
+%8/12
 
 %Finding the USS of Lorenz '63 with Newton's Method
-%Could create basins of where initial conditions land 
-%Some cool numerical stuff: https://www.youtube.com/c/ProfJeffreyChasnov/videos
 %% Initializing
 clear
 clc
 close all
 
+% First guess as to where an USS is
 FirstGuess = [-20; -20; 20];
+
+% Number of iterations to run for
 NumIts = 10;    %Doesn't require 'a lot' of iterations to get a really good estimate
 
 sigma = 10;
@@ -17,10 +18,8 @@ rho = 28;
 beta = 8/3;
 
 %% Newton's Method 
-
 u = zeros(3, NumIts+1);
 u(:,1) = FirstGuess;
-
 for i = 1:NumIts
     x = u(1,i);
     y = u(2,i);
@@ -37,19 +36,16 @@ USS1 = [0; 0; 0]
 USS2 = [sqrt(beta*(rho-1)); sqrt(beta*(rho-1)); rho-1]
 USS3 = [-sqrt(beta*(rho-1)); -sqrt(beta*(rho-1)); rho-1]
 
-%% Nullclines
+%% Visualizing Nullclines
 
 [X1,Z1] = meshgrid(-30:30,-120:4:120);
 Y1 = X1;
-%surf(X1,Y1,Z1)
 
 [X2,Y2] = meshgrid(-30:1:30,-30:1:30);
 Z2 = rho-Y2./X2;
-%surf(X2,Y2,Z2)
 
 [X3,Y3] = meshgrid(-30:30,-30:30);
 Z3 = X3.*Y3./beta;
-%surf(X3,Y3,Z3)
 
 [t, X] = ode45('lorenz', [0:0.01:35], [10 10 10]); 
 hold on
@@ -68,10 +64,6 @@ zlabel('z')
 title('USS of Lorenz 63')
 hold off
 
-
-%% Basins of USS
-
-%Won't be easy to visualize in R3 but could do a cross section 'movie'
 
 
 
